@@ -41,6 +41,7 @@ func _player_disconnected(id):
 
 func _connected_ok():
 	# Only called on clients, not server. Send my ID and info to all the other peers.
+	print("client successfully connected. Detected network peers: ", get_tree().get_network_connected_peers())
 	rpc("register_player", get_tree().get_network_unique_id(), my_info)
 
 func _server_disconnected():
@@ -64,5 +65,6 @@ remote func register_player(id, info):
 	emit_signal("update_lobby", player_info)
 
 remotesync func update_player_info(id, info):
+	print("receiving newly updated data... connected ids: ", get_tree().get_network_connected_peers())
 	player_info[id] = info
 	emit_signal("update_lobby", player_info)
