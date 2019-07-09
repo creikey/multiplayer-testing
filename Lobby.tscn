@@ -1,0 +1,165 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://UI.gd" type="Script" id=1]
+[ext_resource path="res://UpdateHBoxContainer.gd" type="Script" id=2]
+[ext_resource path="res://PlayerLog.gd" type="Script" id=3]
+[ext_resource path="res://DefaultPlayerLog.tscn" type="PackedScene" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="LobbyScene" type="Node2D"]
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/VBoxContainer"]
+editor/display_folded = true
+margin_right = 1024.0
+margin_bottom = 34.0
+
+[node name="Username" type="LineEdit" parent="UI/VBoxContainer/HBoxContainer2"]
+margin_right = 926.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+placeholder_text = "username"
+
+[node name="Panel" type="PanelContainer" parent="UI/VBoxContainer/HBoxContainer2"]
+margin_left = 930.0
+margin_right = 1024.0
+margin_bottom = 34.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer/HBoxContainer2/Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 87.0
+margin_bottom = 27.0
+
+[node name="Label" type="Label" parent="UI/VBoxContainer/HBoxContainer2/Panel/HBoxContainer"]
+margin_top = 3.0
+margin_right = 32.0
+margin_bottom = 17.0
+text = "color"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="UI/VBoxContainer/HBoxContainer2/Panel/HBoxContainer"]
+margin_left = 36.0
+margin_right = 80.0
+margin_bottom = 20.0
+text = "color"
+
+[node name="Port" type="LineEdit" parent="UI/VBoxContainer"]
+margin_top = 38.0
+margin_right = 1024.0
+margin_bottom = 62.0
+placeholder_text = "port"
+
+[node name="TargetIP" type="LineEdit" parent="UI/VBoxContainer"]
+margin_top = 66.0
+margin_right = 1024.0
+margin_bottom = 90.0
+placeholder_text = "target ip"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer"]
+editor/display_folded = true
+margin_top = 94.0
+margin_right = 1024.0
+margin_bottom = 114.0
+
+[node name="JoinServerButton" type="Button" parent="UI/VBoxContainer/HBoxContainer"]
+margin_right = 510.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "join server"
+
+[node name="StartServerButton" type="Button" parent="UI/VBoxContainer/HBoxContainer"]
+margin_left = 514.0
+margin_right = 1024.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "start server"
+
+[node name="StartGameButton" type="Button" parent="UI/VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 684.0
+margin_right = 1024.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "start game"
+
+[node name="UpdateHBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer"]
+visible = false
+margin_top = 118.0
+margin_right = 1024.0
+margin_bottom = 152.0
+script = ExtResource( 2 )
+
+[node name="NewUsername" type="LineEdit" parent="UI/VBoxContainer/UpdateHBoxContainer"]
+margin_right = 836.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+placeholder_text = "new username"
+
+[node name="Panel" type="PanelContainer" parent="UI/VBoxContainer/UpdateHBoxContainer"]
+margin_left = 840.0
+margin_right = 964.0
+margin_bottom = 34.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer/UpdateHBoxContainer/Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 117.0
+margin_bottom = 27.0
+
+[node name="Label" type="Label" parent="UI/VBoxContainer/UpdateHBoxContainer/Panel/HBoxContainer"]
+margin_top = 3.0
+margin_right = 62.0
+margin_bottom = 17.0
+text = "new color"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="UI/VBoxContainer/UpdateHBoxContainer/Panel/HBoxContainer"]
+margin_left = 66.0
+margin_right = 110.0
+margin_bottom = 20.0
+text = "color"
+
+[node name="UpdateButton" type="Button" parent="UI/VBoxContainer/UpdateHBoxContainer"]
+margin_left = 968.0
+margin_right = 1024.0
+margin_bottom = 34.0
+text = "update"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="UI/VBoxContainer"]
+margin_top = 118.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_vertical = 3
+
+[node name="LeftSpacer" type="PanelContainer" parent="UI/VBoxContainer/HBoxContainer3"]
+margin_right = 338.0
+margin_bottom = 482.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="PlayerLog" type="VBoxContainer" parent="UI/VBoxContainer/HBoxContainer3"]
+margin_left = 342.0
+margin_right = 680.0
+margin_bottom = 482.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 3 )
+player_log_pack = ExtResource( 4 )
+
+[node name="RightSpacer" type="PanelContainer" parent="UI/VBoxContainer/HBoxContainer3"]
+margin_left = 684.0
+margin_right = 1024.0
+margin_bottom = 482.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+[connection signal="pressed" from="UI/VBoxContainer/HBoxContainer/JoinServerButton" to="UI" method="_on_JoinServerButton_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/HBoxContainer/StartServerButton" to="UI" method="_on_StartServerButton_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/UpdateHBoxContainer/UpdateButton" to="UI/VBoxContainer/UpdateHBoxContainer" method="_on_UpdateButton_pressed"]

@@ -1,0 +1,20 @@
+[gd_scene format=2]
+
+[node name="DefaultPlayerLog" type="HBoxContainer" groups=[
+"player_logs",
+]]
+margin_right = 338.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="."]
+margin_right = 167.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "default player"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 171.0
+margin_right = 338.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
