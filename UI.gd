@@ -50,7 +50,8 @@ func _on_UPNPButton_pressed():
 	var port_mapping_return_code = Lobby.upnp.add_port_mapping(port)
 	upnp_log.text = "Discover: " + str(discover_return_code) + ", Port Map: " + str(port_mapping_return_code) + " | "
 	if discover_return_code == 0 and port_mapping_return_code == 0:
-		upnp_log.text += "UPNP successful! Port forwarded!"
+		upnp_log.text += "UPNP successful! Port forwarded! | "
+		upnp_log.text += "IP: " + str(Lobby.upnp.query_external_address())
 	else:
 		upnp_log.text += "UPNP failed :(, relay code to developer"
 
