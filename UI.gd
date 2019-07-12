@@ -9,6 +9,7 @@ func hide_network_menu():
 
 func _on_JoinServerButton_pressed():
 	hide_network_menu()
+	
 	Lobby.my_info["user_name"] = $VBoxContainer/HBoxContainer2/Username.text
 	Lobby.my_info["color"] = $VBoxContainer/HBoxContainer2/Panel/HBoxContainer/ColorPickerButton.color
 	$VBoxContainer/UpdateHBoxContainer/NewUsername.text = Lobby.my_info["user_name"]
@@ -20,3 +21,12 @@ func _on_StartServerButton_pressed():
 	hide_network_menu()
 	$VBoxContainer/HBoxContainer/StartGameButton.visible = true
 	Lobby.start_server(int($VBoxContainer/Port.text))
+
+func _on_UPNPButton_pressed():
+	if Lobby.upnp != null:
+		return
+	var port = int($VBoxContainer/Port.text)
+	Lobby.upnp = UPNP.new()
+	Lobby.forwarded_port = port
+	print(Lobby.upnp.discover(2000, 2, "InternetGatewayDevice"))
+	print(Lobby.upnp.add_port_mapping(port))
