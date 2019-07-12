@@ -13,37 +13,46 @@ func _process(delta):
 		save_settings()
 		cur_settings_save_time = 0.0
 
-func hide_network_menu():
+func goto_main_menu():
 	$VBoxContainer/HBoxContainer2.visible = false
 	$VBoxContainer/Port.visible = false
 	$VBoxContainer/TargetIP.visible = false
 	$VBoxContainer/HBoxContainer/JoinServerButton.visible = false
 	$VBoxContainer/HBoxContainer/StartServerButton.visible = false
 	$VBoxContainer/UPNPButton.visible = false
-
-func _on_JoinServerButton_pressed():
-	hide_network_menu()
-	
 	Lobby.my_info["user_name"] = $VBoxContainer/HBoxContainer2/Username.text
 	Lobby.my_info["color"] = $VBoxContainer/HBoxContainer2/Panel/HBoxContainer/ColorPickerButton.color
 	$VBoxContainer/UpdateHBoxContainer/NewUsername.text = Lobby.my_info["user_name"]
 	$VBoxContainer/UpdateHBoxContainer/Panel/HBoxContainer/ColorPickerButton.color = Lobby.my_info["color"]
 	$VBoxContainer/UpdateHBoxContainer.visible = true
+	$VBoxContainer/UPNPLog.visible = false
+
+func _on_JoinServerButton_pressed():
+	goto_main_menu()
 	Lobby.join_server(int($VBoxContainer/Port.text), $VBoxContainer/TargetIP.text)
+	Lobby.emit_signal("update_lobby", Lobby.player_info, Lobby.my_info)
 
 func _on_StartServerButton_pressed():
-	hide_network_menu()
+	goto_main_menu()
 	$VBoxContainer/HBoxContainer/StartGameButton.visible = true
 	Lobby.start_server(int($VBoxContainer/Port.text))
+	Lobby.emit_signal("update_lobby", Lobby.player_info, Lobby.my_info)
 
 func _on_UPNPButton_pressed():
 	if Lobby.upnp != null:
 		return
+	var upnp_log = $VBoxContainer/UPNPLog
+	upnp_log.visible = true
 	var port = int($VBoxContainer/Port.text)
 	Lobby.upnp = UPNP.new()
 	Lobby.forwarded_port = port
-	print(Lobby.upnp.discover(2000, 2, "InternetGatewayDevice"))
-	print(Lobby.upnp.add_port_mapping(port))
+	var discover_return_code = Lobby.upnp.discover(2000, 2, "InternetGatewayDevice")
+	var port_mapping_return_code = Lobby.upnp.add_port_mapping(port)
+	upnp_log.text = "Discover: " + str(discover_return_code) + ", Port Map: " + str(port_mapping_return_code) + " | "
+	if discover_return_code == 0 and port_mapping_return_code == 0:
+		upnp_log.text += "UPNP successful! Port forwarded!"
+	else:
+		upnp_log.text += "UPNP failed :(, relay code to developer"
 
 func save_settings():
 	var settings_dict = {

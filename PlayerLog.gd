@@ -3,8 +3,8 @@ extends VBoxContainer
 export (PackedScene) var player_log_pack
 
 func append_log(player_id, player_info):
-	if player_id == 1: # don't show server info
-			return
+#	if player_id == 1: # don't show server info
+#			return
 	var cur_pack = player_log_pack.instance()
 	add_child(cur_pack)
 	cur_pack.get_node("Label").text = player_info["user_name"]
