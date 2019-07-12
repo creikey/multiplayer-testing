@@ -164,6 +164,7 @@ margin_bottom = 458.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 1 )
+[connection signal="tree_exiting" from="UI" to="UI" method="_on_UI_tree_exiting"]
 [connection signal="pressed" from="UI/VBoxContainer/HBoxContainer/JoinServerButton" to="UI" method="_on_JoinServerButton_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/HBoxContainer/StartServerButton" to="UI" method="_on_StartServerButton_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/UPNPButton" to="UI" method="_on_UPNPButton_pressed"]
