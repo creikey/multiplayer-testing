@@ -96,3 +96,8 @@ func load_settings():
 
 func _on_UI_tree_exiting():
 	save_settings()
+
+
+func _on_StartGameButton_pressed():
+	assert(get_tree().get_network_unique_id() == 1)
+	Lobby.rpc("preconfigure_game")

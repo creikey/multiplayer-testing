@@ -71,3 +71,42 @@ remote func register_player(id, info):
 	player_info[id] = info
 	# Call function to update lobby UI here
 	emit_signal("update_lobby", player_info, my_info)
+
+remotesync func preconfigure_game():
+	var my_peer_id = get_tree().get_network_unique_id()
+	var world = load("res://World.tscn").instance()
+	get_node("/root").add_child(world)
+	
+	var player_pack = preload("res://Player.tscn")
+	var my_player = player_pack.instance()
+	my_player.set_name(str(my_peer_id))
+	my_player.set_network_master(my_peer_id)
+	my_player.get_node("ColorRect").color = my_info["color"]
+	my_player.get_node("NametagLabel").text = my_info["user_name"]
+	get_node("/root/World/Players").add_child(my_player)
+	
+	for p in player_info:
+		var cur_player = player_pack.instance()
+		cur_player.set_name(str(p))
+		cur_player.set_network_master(p)
+		cur_player.get_node("ColorRect").color = player_info[p]["color"]
+		cur_player.get_node("NametagLabel").text = player_info[p]["user_name"]
+		get_node("/root/World/Players").add_child(cur_player)
+	
+	get_node("/root/LobbyScene").queue_free()
+	rpc_id(1, "done_preconfiguring", my_peer_id)
+
+var players_done = []
+remote func done_preconfiguring(who):
+	assert(get_tree().is_network_server())
+	assert(who in player_info)
+	assert(not who in players_done)
+	
+	players_done.append(who)
+	
+	if players_done.size() == player_info.size() + 1: # account for server
+		rpc("post_configure_game")
+
+remote func post_configure_game():
+	pass
+	

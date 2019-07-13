@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://UI.gd" type="Script" id=1]
-[ext_resource path="res://UpdateHBoxContainer.gd" type="Script" id=2]
-[ext_resource path="res://PlayerLog.gd" type="Script" id=3]
+[ext_resource path="res://PlayerLog.gd" type="Script" id=1]
+[ext_resource path="res://UI.gd" type="Script" id=2]
+[ext_resource path="res://UpdateHBoxContainer.gd" type="Script" id=3]
 [ext_resource path="res://DefaultPlayerLog.tscn" type="PackedScene" id=4]
 
 [sub_resource type="StyleBoxEmpty" id=1]
@@ -10,7 +10,7 @@
 [node name="LobbyScene" type="Node2D"]
 
 [node name="UI" type="CanvasLayer" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI"]
 anchor_right = 1.0
@@ -111,7 +111,7 @@ visible = false
 margin_top = 118.0
 margin_right = 1024.0
 margin_bottom = 152.0
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [node name="NewUsername" type="LineEdit" parent="UI/VBoxContainer/UpdateHBoxContainer"]
 margin_right = 836.0
@@ -167,7 +167,7 @@ margin_right = 680.0
 margin_bottom = 458.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource( 3 )
+script = ExtResource( 1 )
 player_log_pack = ExtResource( 4 )
 
 [node name="RightSpacer" type="PanelContainer" parent="UI/VBoxContainer/HBoxContainer3"]
@@ -180,5 +180,6 @@ custom_styles/panel = SubResource( 1 )
 [connection signal="tree_exiting" from="UI" to="UI" method="_on_UI_tree_exiting"]
 [connection signal="pressed" from="UI/VBoxContainer/HBoxContainer/JoinServerButton" to="UI" method="_on_JoinServerButton_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/HBoxContainer/StartServerButton" to="UI" method="_on_StartServerButton_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/HBoxContainer/StartGameButton" to="UI" method="_on_StartGameButton_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/UPNPButton" to="UI" method="_on_UPNPButton_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/UpdateHBoxContainer/UpdateButton" to="UI/VBoxContainer/UpdateHBoxContainer" method="_on_UpdateButton_pressed"]
